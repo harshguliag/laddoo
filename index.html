@@ -29,9 +29,11 @@ footer{text-align:center;padding:30px;background:var(--pink1);font-size:18px}
 .type{border-right:3px solid #e75480;white-space:nowrap;overflow:hidden;animation:typing 4s steps(30,end),blink .7s infinite}
 @keyframes typing{from{width:0}to{width:100%}}
 @keyframes blink{50%{border-color:transparent}}
+@media(max-width:768px){header{background-size:contain;background-color:#fce4ec;background-position:center top;}}
 </style>
 </head>
 <body>
+<div id="tapOverlay" style="position:fixed;inset:0;background:linear-gradient(135deg,#fce4ec,#ffffff);display:flex;align-items:center;justify-content:center;z-index:9999;font-size:28px;color:#e75480;font-family:'Great Vibes',cursive;">Tap to open 💗</div>
 
 <header>
   <h1>Meri Laddoo 💕</h1>
@@ -39,10 +41,7 @@ footer{text-align:center;padding:30px;background:var(--pink1);font-size:18px}
 </header>
 
 <section>
-  <div class="card">
-    <h2>About Her</h2>
-    <p>This space is dedicated to the most special person — someone who makes every day brighter, calmer and happier 🌸</p>
-  </div>
+  
 
   <div class="card nicknames">
     <h2>Her Nicknames</h2>
@@ -58,22 +57,12 @@ footer{text-align:center;padding:30px;background:var(--pink1);font-size:18px}
     <div class="gallery" id="dynamicGallery"></div>
   </div>
 
-  <div class="card">
-    <h2>Memories 📸</h2>
-    <div class="gallery">
-      <img src="img1.jpg"><img src="img2.jpg"><img src="img3.jpg"><img src="img4.jpg">
-    </div>
+  
   </div>
 
-  <div class="card video">
-    <h2>Videos 🎬</h2>
-    <iframe src="https://www.youtube.com/embed/VIDEOID"></iframe>
-  </div>
+  
 
-  <div class="card">
-    <h2>Message</h2>
-    <p>You are one of the rare people who make life feel soft, warm and peaceful. Stay the same always 💗🌷</p>
-  </div>
+  
 </section>
 
 <footer>Made with ❤ for Meri Laddoo</footer>
@@ -102,6 +91,16 @@ function enableSound(){
 document.addEventListener('click',enableSound);
 document.addEventListener('touchstart',enableSound);
 document.addEventListener('scroll',enableSound);
+
+// guaranteed mobile audio start (required by Chrome/Safari policies)
+const overlay=document.getElementById('tapOverlay');
+overlay.addEventListener('click',()=>{
+  mainAudio.muted=false;
+  mainAudio.volume=0.2;
+  mainAudio.play().catch(()=>{});
+  overlay.style.opacity='0';
+  setTimeout(()=>overlay.remove(),500);
+});
 
 // scroll reveal
 const cards=document.querySelectorAll('.card');
