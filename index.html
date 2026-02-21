@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Meri Laddoo 💗</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+:root{--pink1:#f8d7da;--pink3:#fce4ec;--pink4:#ffb6c1}
+body{margin:0;font-family:Poppins,sans-serif;background:linear-gradient(135deg,var(--pink3),#fff);overflow-x:hidden}
+header{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:linear-gradient(rgba(255,255,255,.35),rgba(255,255,255,.65)),url('cover.jpg');background-size:cover;background-position:center}
+header h1{font-family:'Great Vibes',cursive;font-size:72px;color:#e75480;margin:0}
+section{padding:60px 20px;max-width:1100px;margin:auto}
+.card{background:#fff;padding:25px;border-radius:20px;box-shadow:0 10px 25px rgba(0,0,0,.1);margin-bottom:40px}
+.nicknames span{display:inline-block;background:var(--pink4);padding:10px 18px;border-radius:20px;margin:8px;color:#fff;font-weight:600;cursor:pointer}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.gallery img{width:100%;border-radius:18px}
+footer{text-align:center;padding:30px;background:var(--pink1)}
+@media(max-width:768px){header{background-size:contain;background-color:#fce4ec;background-position:center top}}
+#gate{position:fixed;inset:0;background:linear-gradient(135deg,#fce4ec,#fff);display:flex;align-items:center;justify-content:center;z-index:9999;text-align:center;padding:20px}
+#nickMsg{white-space:pre-line}
+button{padding:10px 18px;border:none;border-radius:12px;background:#ff8fab;color:white;margin:6px;cursor:pointer}
+input{padding:10px;border-radius:10px;border:1px solid #ccc}
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div id="step1">
+    <h2>What's your name? 💗</h2>
+    <p>Hint: your famous nickname 😏</p>
+    <input id="nameInput"><br><br>
+    <button onclick="checkName()">Enter</button>
+    <p id="nameErr" style="color:#e75480"></p>
+  </div>
+  <div id="step2" style="display:none">
+    <h2>Do you drink water? 💧😂</h2>
+    <button onclick="waterAns(true)">Yes</button>
+    <button onclick="waterAns(false)">No</button>
+    <p id="waterErr" style="color:#e75480"></p>
+  </div>
+  <div id="step3" style="display:none">
+    <h2>Pakka ?? 😆</h2>
+    <button onclick="pakka1()">Yes</button>
+  </div>
+  <div id="step4" style="display:none">
+    <h2>Ok one more time pakka ? 🤨</h2>
+    <button onclick="enterSite()">Yes</button>
+  </div>
+</div>
+
+<header><h1>Meri Laddoo 💕</h1></header>
+
+<section>
+  <div class="card nicknames">
+    <h2>Her Nicknames</h2>
+    <span data-set="milk">Dr. Perfect</span>
+    <span data-set="bachi">Bachi</span>
+    <span data-set="laddoo">Meri Laddoo</span>
+    <span data-set="lady">Lady Don</span>
+    <span data-set="kaju">Kajukatli</span>
+  </div>
+  <div id="nicknameGallery" class="card" style="display:none">
+    <h2 id="galleryTitle"></h2>
+    <p id="nickMsg" style="margin-bottom:15px;color:#555"></p>
+    <div class="gallery" id="dynamicGallery"></div>
+  </div>
+</section>
+
+<footer>Made with ❤ for Meri Laddoo</footer>
+
+<audio id="mainSong" src="main.mp3" loop></audio>
+<audio id="nickSong"></audio>
+<audio id="photoSong"></audio>
+
+<script>
+const mainAudio = document.getElementById('mainSong');
+const nickAudio = document.getElementById('nickSong');
+const photoAudio = document.getElementById('photoSong');
+
+const gate = document.getElementById('gate');
+const step1 = document.getElementById('step1');
+const step2 = document.getElementById('step2');
+const step3 = document.getElementById('step3');
+const step4 = document.getElementById('step4');
+const nameErr = document.getElementById('nameErr');
+const waterErr = document.getElementById('waterErr');
+const nameInput = document.getElementById('nameInput');
+const dynamicGallery = document.getElementById('dynamicGallery');
+const galleryTitle = document.getElementById('galleryTitle');
+const nicknameGallery = document.getElementById('nicknameGallery');
+const nickMsg = document.getElementById('nickMsg');
+
+function stopAllExtraAudio(){
+  nickAudio.pause(); nickAudio.currentTime = 0;
+  photoAudio.pause(); photoAudio.currentTime = 0;
+}
+function pauseMain(){ mainAudio.pause(); }
+
+// gate logic
+function checkName(){
+  const v = nameInput.value.trim().toLowerCase();
+  if(v==='bachi'){
+    step1.style.display='none';
+    step2.style.display='block';
+    nameErr.innerText='';
+  } else nameErr.innerText='Hmm… something missing 🤔';
+}
+function waterAns(ans){
+  if(ans){ step2.style.display='none'; step3.style.display='block'; waterErr.innerText=''; }
+  else waterErr.innerText='Go drink water first 💧😆';
+}
+function pakka1(){ step3.style.display='none'; step4.style.display='block'; }
+function enterSite(){ gate.remove(); mainAudio.volume=.2; mainAudio.play().catch(()=>{}); }
+
+// nickname data
+const imageSets={
+  bachi:{msg:`Bachi - Sabse phela nickname ...not just 5 din choti h...bcz choti bachi h bhi ye
+Apni harkte, notankiya , Bakchodi vgera se khud ko prove krti h bachi h ye😂 although samjhdar bhi h mature bhi h lekin mere samne bachpana nikl he aata h iska and ye bachpana merko bahut pyara lgta h  😂💗
+Ye piece jo abhi 19 saal purana h and kuch mahine me 20 saal purana hojayega ye piece😂😂 humesha khushi he deta h merko kyuki iska bachpana aisa h jo kbhi kisi or me ni dikha😂💗🫂`,images:['img3.jpg']},
+  laddoo:{msg:`Meri Laddoo - mere liye iska meri jindgi me hona he sab kuch h ...meri khushi iski khushi me hoti h tu hemsha khush rha kr meri laddo .....tujhe ni pta but tere hone se he m bahut rheta hu bahut acha lgta h sab apnasa sb kuch acha lgta h 💗😭🫂tera hasna tera ruthna tera gussa krna tera daatna sb kuch merko bahut psnd h 🫂💗`,images:['img2.jpg']},
+  lady:{msg:`Lady don - hmesha dadagiri krti h🥲hmesha daatna bhi acha nhi h 😭😭gundi khi ki sugli harami h kutti kamini 😭😭but jaisi bhi h meri h or sabse achi h 🥰💗🫂 jyada sikhayat bhi nhi kr skta ulta mere dhar degi 😭😭to at the end sabse achi sabse bdi gundi upr se gundi bhi vo jo phele todegi fir dr ki degree kr he rhi h to jodegi bhi
+fav dialoge hone wala h phele todugi fir fodugi fir jod k vapis todugi 😭💗😂`,images:['img1.jpg']},
+  milk:{msg:`Bachi achi h yrr tu ....mere pass sabd ni h teri tarif kaise kru but hn tarif itni sari h ki kbhi ruk bhi nhi skta m sbdkosh se sbd he khtm hojate h mere tere samne fir bhi jaise taise tarif kr he leta hu 😭😭
+tu jo Perfect peice h vo peice kbhi bhi khi bhi kisi or me kbhi ni milega hasna rona ruthna bhul jana ldai krlena kaleshi sugli hoke nikhrna dramebaaz notankibaaz everything evrey mood everything in one person and that person is you and you are too perfect and handling everything too perfectly 💗🫂
+You aree best in studying, best in acting, best in nakhre jhading, best in mood swings dikhaing , best in evreything bhai 🫂💗😭
+I am too gratefull that I am your friend your diary your bestfriend 💗🫂`,images:['img5.jpg']},
+  kaju:{msg:`Kajukatli - Kajukatli ki trh safed gori chitti lambi height 47 kg ka weight 28 ki kmr🌝😂 100 crore se bhi jyada k nakhre 😂💗itna saab smbhalti h ghr me clg me and sbse important merko smbhal leti h to bhai sweet to ni h tu but hm sweetest to jrur h 🥰💗🫂
+Hmesha muskrati khilkhilati khush rha kar teri chupi tera udas hona bilkul suit ni krta tere pe meri kajukatli to hmesha muskrate rha kr 🫂💗`,images:['img6.jpg','img7.jpg','img8.jpg']}
+};
+
+// nickname click
+document.querySelectorAll('.nicknames span').forEach(tag=>{
+  tag.onclick=()=>{
+    stopAllExtraAudio(); pauseMain();
+    const key=tag.dataset.set;
+    dynamicGallery.innerHTML='';
+    nickMsg.innerText=imageSets[key].msg;
+
+    // play song immediately based on first image
+    if(imageSets[key].images && imageSets[key].images.length){
+      const first=imageSets[key].images[0];
+      const song=(first.includes('img6')||first.includes('img7')||first.includes('img8'))?'img6.mp3':first.replace('.jpg','.mp3');
+      photoAudio.src=song; photoAudio.loop=true; photoAudio.play();
+    }
+
+    imageSets[key].images.forEach(src=>{
+      const img=document.createElement('img'); img.src=src;
+      dynamicGallery.appendChild(img);
+    });
+
+    galleryTitle.innerText=tag.innerText+' 💗';
+    nicknameGallery.style.display='block';
+  }
+});
+</script>
+</body>
+</html>
