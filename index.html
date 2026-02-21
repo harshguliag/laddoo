@@ -10,7 +10,7 @@
   --pink1:#f8d7da; --pink2:#f4a6b5; --pink3:#fce4ec; --pink4:#ffb6c1; --white:#ffffff;
 }
 body{margin:0;font-family:'Poppins',sans-serif;background:linear-gradient(135deg,var(--pink3),var(--white));color:#444;overflow-x:hidden}
-header{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:linear-gradient(rgba(255,255,255,0.4),rgba(255,255,255,0.7)),url('cover.jpg');background-size:cover;position:relative}
+header{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:linear-gradient(rgba(255,255,255,0.35),rgba(255,255,255,0.65)),url('cover.jpg');background-size:cover;background-position:center center;background-repeat:no-repeat;position:relative}
 header h1{font-family:'Great Vibes',cursive;font-size:72px;color:#e75480;margin:0;animation:fadeUp 2s ease}
 header p{font-size:22px;animation:fadeUp 3s ease}
 section{padding:70px 20px;max-width:1100px;margin:auto}
@@ -46,7 +46,17 @@ footer{text-align:center;padding:30px;background:var(--pink1);font-size:18px}
 
   <div class="card nicknames">
     <h2>Her Nicknames</h2>
-    <span>Bachi</span><span>Laddoo</span><span>KajuKatli</span><span>My Bestie</span><span>Milkshake</span><span>Meri Laddo</span>
+    <span data-set="bachi">Bachi</span>
+    <span data-set="laddoo">Laddoo</span>
+    <span data-set="kaju">KajuKatli</span>
+    <span data-set="bestie">My Bestie</span>
+    <span data-set="milk">Milkshake</span>
+    <span data-set="meri">Meri Laddo</span>
+  </div>
+
+  <div id="nicknameGallery" class="card" style="display:none">
+    <h2 id="galleryTitle"></h2>
+    <div class="gallery" id="dynamicGallery"></div>
   </div>
 
   <div class="card">
@@ -69,12 +79,46 @@ footer{text-align:center;padding:30px;background:var(--pink1);font-size:18px}
 
 <footer>Made with ❤ for Meri Laddoo</footer>
 
+<audio id="bgSong" src="song.mp3"></audio>
+
 <script>
 // scroll reveal
 const cards=document.querySelectorAll('.card');
 window.addEventListener('scroll',()=>{
   const trigger=window.innerHeight*0.85;
   cards.forEach(c=>{if(c.getBoundingClientRect().top<trigger)c.classList.add('show')})
+});
+
+// nickname galleries
+const imageSets={
+  bachi:['img1.jpg','img2.jpg'],
+  laddoo:['img3.jpg','img4.jpg'],
+  kaju:['img2.jpg','img5.jpg'],
+  bestie:['img1.jpg','img3.jpg','img5.jpg'],
+  milk:['img4.jpg','img2.jpg'],
+  meri:['img5.jpg','img1.jpg']
+};
+
+document.querySelectorAll('.nicknames span').forEach(tag=>{
+  tag.addEventListener('click',()=>{
+    const key=tag.dataset.set;
+    const gallery=document.getElementById('dynamicGallery');
+    const title=document.getElementById('galleryTitle');
+    gallery.innerHTML='';
+    imageSets[key].forEach(src=>{
+      const img=document.createElement('img');
+      img.src=src;
+      img.addEventListener('click',()=>{
+        const audio=document.getElementById('bgSong');
+        audio.currentTime=0;
+        audio.play();
+      });
+      gallery.appendChild(img);
+    });
+    title.innerText=tag.innerText+' Memories 💗';
+    document.getElementById('nicknameGallery').style.display='block';
+    window.scrollTo({top:document.getElementById('nicknameGallery').offsetTop-80,behavior:'smooth'});
+  });
 });
 
 // floating hearts
