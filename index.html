@@ -78,17 +78,30 @@ footer{text-align:center;padding:30px;background:var(--pink1);font-size:18px}
 
 <footer>Made with ❤ for Meri Laddoo</footer>
 
-<audio id="mainSong" src="main.mp3" loop></audio>
+<audio id="mainSong" autoplay loop muted playsinline>
+  <source src="main.mp3" type="audio/mpeg">
+  <source src="main.mp4" type="audio/mp4">
+</audio>
 <audio id="nickSong"></audio>
 <audio id="photoSong"></audio>
 
 <script>
 // start main background music on first interaction
 const mainAudio=document.getElementById('mainSong');
-mainAudio.volume=0.2;
-function startMain(){mainAudio.play().catch(()=>{});document.removeEventListener('click',startMain);document.removeEventListener('touchstart',startMain);} 
-document.addEventListener('click',startMain);
-document.addEventListener('touchstart',startMain);
+mainAudio.volume=0;
+
+// mobile browsers block sound autoplay — we fade in after first interaction (scroll/touch/click)
+function enableSound(){
+  let v=0;mainAudio.muted=false;
+  const fade=setInterval(()=>{v+=0.02;mainAudio.volume=v;if(v>=0.2)clearInterval(fade)},80);
+  document.removeEventListener('click',enableSound);
+  document.removeEventListener('touchstart',enableSound);
+  document.removeEventListener('scroll',enableSound);
+}
+
+document.addEventListener('click',enableSound);
+document.addEventListener('touchstart',enableSound);
+document.addEventListener('scroll',enableSound);
 
 // scroll reveal
 const cards=document.querySelectorAll('.card');
