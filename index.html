@@ -55,11 +55,13 @@ input{padding:10px;border-radius:10px;border:1px solid #ccc}
     <h2>Her Nicknames</h2>
     <span data-set="bachi">Bachi</span>
     <span data-set="laddoo">Meri Laddoo</span>
-    <span data-set="kaju">My Kajukatli</span>
-    <span data-set="milk">My Milk Syrup</span>
+    <span data-set="lady">Lady Don</span>
+    <span data-set="milk">Milk Syrup</span>
+    <span data-set="kaju">Kajukatli</span>
   </div>
   <div id="nicknameGallery" class="card" style="display:none">
     <h2 id="galleryTitle"></h2>
+    <p id="nickMsg" style="margin-bottom:15px;color:#555"></p>
     <div class="gallery" id="dynamicGallery"></div>
   </div>
 </section>
@@ -83,22 +85,24 @@ function pakka1(){step3.style.display='none';step4.style.display='block'}
 function enterSite(){gate.remove();mainAudio.volume=.2;mainAudio.play().catch(()=>{})}
 
 const imageSets={
-  bachi:{bg:'nb1.mp3',images:[{src:'img1.jpg',song:'s1.mp3'},{src:'img2.jpg',song:'s2.mp3'},{src:'img3.jpg',song:'s3.mp3'},{src:'img4.jpg',song:'s4.mp3'}]},
-  laddoo:{bg:'nb2.mp3',images:[{src:'img1.jpg',song:'s1.mp3'},{src:'img2.jpg',song:'s2.mp3'},{src:'img3.jpg',song:'s3.mp3'},{src:'img4.jpg',song:'s4.mp3'}]},
-  kaju:{bg:'nb3.mp3',images:[{src:'img2.jpg',song:'s2.mp3'},{src:'img3.jpg',song:'s3.mp3'},{src:'img4.jpg',song:'s4.mp3'},{src:'img5.jpg',song:'s5.mp3'}]},
-  milk:{bg:'nb5.mp3',images:[{src:'img2.jpg',song:'s2.mp3'},{src:'img3.jpg',song:'s3.mp3'},{src:'img4.jpg',song:'s4.mp3'},{src:'img5.jpg',song:'s5.mp3'}]}
+  bachi:{msg:"",images:['img3.jpg']},
+  laddoo:{msg:"",images:['img2.jpg']},
+  lady:{msg:"",images:['img1.jpg']},
+  milk:{msg:"",images:['img5.jpg']},
+  kaju:{msg:"",images:['img6.jpg','img7.jpg','img8.jpg']}
 };
 
 document.querySelectorAll('.nicknames span').forEach(tag=>{
   tag.onclick=()=>{
     const key=tag.dataset.set;dynamicGallery.innerHTML='';
-    nickSong.src=imageSets[key].bg;nickSong.play();
-    imageSets[key].images.forEach(it=>{
-      const img=document.createElement('img');img.src=it.src;
-      img.onclick=()=>{photoSong.src=it.song;photoSong.play()};
+    nickMsg.innerText=imageSets[key].msg;
+    imageSets[key].images.forEach(src=>{
+      const img=document.createElement('img');img.src=src;
+      const song= src.startsWith('img6')||src.startsWith('img7')||src.startsWith('img8') ? 'img6.mp3' : src.replace('.jpg','.mp3');
+      img.onclick=()=>{photoSong.src=song;photoSong.loop=true;photoSong.currentTime=0;photoSong.play()};
       dynamicGallery.appendChild(img);
     });
-    galleryTitle.innerText=tag.innerText+' Memories 💗';
+    galleryTitle.innerText=tag.innerText+' 💗';
     nicknameGallery.style.display='block';
   }
 });
