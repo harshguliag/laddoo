@@ -149,6 +149,35 @@ setInterval(()=>{
   const h=document.createElement('div');h.className='heart';h.innerHTML='❤';h.style.left=Math.random()*100+'vw';h.style.animationDuration=4+Math.random()*4+'s';document.body.appendChild(h);
   setTimeout(()=>h.remove(),8000);
 },400);
+// gate logic with fun emojis 😄💧
+function checkName(){
+  const v=document.getElementById('nameInput').value.trim().toLowerCase();
+  if(v==='bachi'){
+    document.getElementById('step1').style.display='none';
+    document.getElementById('step2').style.display='block';
+  }else{
+    document.getElementById('nameErr').innerText='Hmm… something is missing 🤔 maybe add 2 more letters?';
+  }
+}
+function waterAns(ans){
+  if(ans){
+    document.getElementById('step2').style.display='none';
+    document.getElementById('step3').style.display='block';
+  }else{
+    document.getElementById('waterErr').innerText='Go drink water first 💧 then come back 😆';
+  }
+}
+function pakka1(){
+  document.getElementById('step3').style.display='none';
+  document.getElementById('step4').style.display='block';
+}
+function enterSite(){
+  const gate=document.getElementById('gate');
+  gate.style.opacity='0';
+  setTimeout(()=>gate.remove(),500);
+  const mainAudio=document.getElementById('mainSong');
+  mainAudio.muted=false;mainAudio.volume=0.2;mainAudio.play().catch(()=>{});
+}
 </script>
 
 </body>
