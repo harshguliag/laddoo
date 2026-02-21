@@ -47,11 +47,10 @@ footer{text-align:center;padding:30px;background:var(--pink1);font-size:18px}
   <div class="card nicknames">
     <h2>Her Nicknames</h2>
     <span data-set="bachi">Bachi</span>
-    <span data-set="laddoo">Laddoo</span>
-    <span data-set="kaju">KajuKatli</span>
-    <span data-set="bestie">My Bestie</span>
-    <span data-set="milk">Milkshake</span>
-    <span data-set="meri">Meri Laddo</span>
+    <span data-set="laddoo">Meri Laddoo</span>
+    <span data-set="kaju">My Kajukatli</span>
+    <span data-set="jigar">Jigar ka tukda</span>
+    <span data-set="milk">My Milk Syrup</span>
   </div>
 
   <div id="nicknameGallery" class="card" style="display:none">
@@ -79,9 +78,18 @@ footer{text-align:center;padding:30px;background:var(--pink1);font-size:18px}
 
 <footer>Made with ❤ for Meri Laddoo</footer>
 
-<audio id="bgSong" src="song.mp3"></audio>
+<audio id="mainSong" src="main.mp3" loop></audio>
+<audio id="nickSong"></audio>
+<audio id="photoSong"></audio>
 
 <script>
+// start main background music on first interaction
+const mainAudio=document.getElementById('mainSong');
+mainAudio.volume=0.2;
+function startMain(){mainAudio.play().catch(()=>{});document.removeEventListener('click',startMain);document.removeEventListener('touchstart',startMain);} 
+document.addEventListener('click',startMain);
+document.addEventListener('touchstart',startMain);
+
 // scroll reveal
 const cards=document.querySelectorAll('.card');
 window.addEventListener('scroll',()=>{
@@ -91,12 +99,11 @@ window.addEventListener('scroll',()=>{
 
 // nickname galleries
 const imageSets={
-  bachi:['img1.jpg','img2.jpg'],
-  laddoo:['img3.jpg','img4.jpg'],
-  kaju:['img2.jpg','img5.jpg'],
-  bestie:['img1.jpg','img3.jpg','img5.jpg'],
-  milk:['img4.jpg','img2.jpg'],
-  meri:['img5.jpg','img1.jpg']
+  bachi:{bg:'nb1.mp3',images:[{src:'img1.jpg',song:'s1.mp3'},{src:'img2.jpg',song:'s2.mp3'},{src:'img3.jpg',song:'s3.mp3'},{src:'img4.jpg',song:'s4.mp3'}]},
+  laddoo:{bg:'nb2.mp3',images:[{src:'img1.jpg',song:'s1.mp3'},{src:'img2.jpg',song:'s2.mp3'},{src:'img3.jpg',song:'s3.mp3'},{src:'img4.jpg',song:'s4.mp3'}]},
+  kaju:{bg:'nb3.mp3',images:[{src:'img2.jpg',song:'s2.mp3'},{src:'img3.jpg',song:'s3.mp3'},{src:'img4.jpg',song:'s4.mp3'},{src:'img5.jpg',song:'s5.mp3'}]},
+  jigar:{bg:'nb4.mp3',images:[{src:'img1.jpg',song:'s1.mp3'},{src:'img3.jpg',song:'s3.mp3'},{src:'img4.jpg',song:'s4.mp3'},{src:'img5.jpg',song:'s5.mp3'}]},
+  milk:{bg:'nb5.mp3',images:[{src:'img2.jpg',song:'s2.mp3'},{src:'img3.jpg',song:'s3.mp3'},{src:'img4.jpg',song:'s4.mp3'},{src:'img5.jpg',song:'s5.mp3'}]}
 };
 
 document.querySelectorAll('.nicknames span').forEach(tag=>{
@@ -105,13 +112,17 @@ document.querySelectorAll('.nicknames span').forEach(tag=>{
     const gallery=document.getElementById('dynamicGallery');
     const title=document.getElementById('galleryTitle');
     gallery.innerHTML='';
-    imageSets[key].forEach(src=>{
+
+    // play nickname background song
+    const nickAudio=document.getElementById('nickSong');
+    nickAudio.src=imageSets[key].bg;nickAudio.currentTime=0;nickAudio.play();
+
+    imageSets[key].images.forEach(item=>{
       const img=document.createElement('img');
-      img.src=src;
+      img.src=item.src;
       img.addEventListener('click',()=>{
-        const audio=document.getElementById('bgSong');
-        audio.currentTime=0;
-        audio.play();
+        const photoAudio=document.getElementById('photoSong');
+        photoAudio.src=item.song;photoAudio.currentTime=0;photoAudio.play();
       });
       gallery.appendChild(img);
     });
