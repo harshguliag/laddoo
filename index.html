@@ -4,155 +4,582 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Meri Laddoo 💗</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Great+Vibes&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{--pink1:#f8d7da;--pink3:#fce4ec;--pink4:#ffb6c1}
-body{margin:0;font-family:Poppins,sans-serif;background:linear-gradient(135deg,var(--pink3),#fff);overflow-x:hidden}
-header{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:linear-gradient(rgba(255,255,255,.35),rgba(255,255,255,.65)),url('cover.jpg');background-size:cover;background-position:center}
-header h1{font-family:'Great Vibes',cursive;font-size:72px;color:#e75480;margin:0}
-section{padding:60px 20px;max-width:1100px;margin:auto}
-.card{background:#fff;padding:25px;border-radius:20px;box-shadow:0 10px 25px rgba(0,0,0,.1);margin-bottom:40px}
-.nicknames span{display:inline-block;background:var(--pink4);padding:10px 18px;border-radius:20px;margin:8px;color:#fff;font-weight:600;cursor:pointer}
+:root{
+  --pink1:#f8d7da;--pink2:#f48fb1;--pink3:#fce4ec;--pink4:#ffb6c1;
+  --deep:#e75480;--blush:#fff0f3;--rose:#c2185b;--soft:#fff5f7;
+  --text:#3d1c2a;--muted:#9e6b7f;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--blush);color:var(--text);overflow-x:hidden;cursor:none}
+
+/* CUSTOM CURSOR */
+#cursor{position:fixed;width:12px;height:12px;background:var(--deep);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:transform .1s;mix-blend-mode:multiply}
+#cursor-trail{position:fixed;pointer-events:none;z-index:99998;top:0;left:0}
+
+/* SPARKLES */
+.sparkle{position:fixed;pointer-events:none;z-index:99997;font-size:14px;animation:sparkle-fall .8s ease-out forwards}
+@keyframes sparkle-fall{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(30px) scale(0)}}
+
+/* GATE */
+#gate{position:fixed;inset:0;background:linear-gradient(135deg,#fce4ec,#fff0f3,#fff);display:flex;align-items:center;justify-content:center;z-index:9000;text-align:center;padding:20px}
+.gate-box{background:white;border-radius:32px;padding:48px 40px;box-shadow:0 30px 80px rgba(231,84,128,.15);max-width:400px;width:100%;animation:floatIn .6s ease}
+@keyframes floatIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.gate-box h2{font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--deep);margin-bottom:8px;font-style:italic}
+.gate-box p{color:var(--muted);font-size:14px;margin-bottom:24px}
+.gate-box input{width:100%;padding:14px 18px;border-radius:16px;border:2px solid var(--pink3);font-family:'DM Sans',sans-serif;font-size:16px;outline:none;transition:.2s;color:var(--text)}
+.gate-box input:focus{border-color:var(--deep);box-shadow:0 0 0 4px rgba(231,84,128,.1)}
+.gate-box button{margin-top:14px;padding:14px 32px;border:none;border-radius:16px;background:linear-gradient(135deg,var(--deep),var(--pink2));color:white;font-size:16px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;width:100%;transition:.2s}
+.gate-box button:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(231,84,128,.3)}
+.gate-box .row-btns{display:flex;gap:12px;margin-top:14px}
+.gate-box .row-btns button{margin-top:0}
+.gate-err{color:var(--deep);font-size:13px;margin-top:10px;min-height:20px}
+.gate-emoji{font-size:48px;margin-bottom:16px}
+
+/* HEADER */
+header{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;overflow:hidden;background:linear-gradient(160deg,var(--pink3) 0%,white 60%,var(--soft) 100%)}
+.header-bg{position:absolute;inset:0;background:url('cover.jpg') center/cover no-repeat;opacity:.18}
+.header-content{position:relative;z-index:1}
+header h1{font-family:'Great Vibes',cursive;font-size:clamp(56px,10vw,96px);color:var(--deep);line-height:1.1;text-shadow:0 4px 30px rgba(231,84,128,.2)}
+header p.subtitle{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;color:var(--muted);margin-top:12px;letter-spacing:.5px}
+.scroll-hint{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);color:var(--muted);font-size:13px;animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+.hearts-float{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.heart-p{position:absolute;font-size:20px;animation:floatUp linear infinite;opacity:0}
+@keyframes floatUp{0%{opacity:0;transform:translateY(100vh) rotate(0deg)}10%{opacity:.6}90%{opacity:.3}100%{opacity:0;transform:translateY(-10vh) rotate(360deg)}}
+
+/* SECTIONS */
+section{padding:80px 24px;max-width:1100px;margin:auto}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,56px);font-style:italic;color:var(--deep);margin-bottom:48px;text-align:center}
+.section-title span{display:block;font-family:'DM Sans',sans-serif;font-style:normal;font-size:14px;font-weight:400;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px}
+
+/* NICKNAMES (kept from original) */
+.card{background:white;padding:32px;border-radius:28px;box-shadow:0 10px 40px rgba(231,84,128,.08);margin-bottom:40px}
+.nicknames-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.nick-tag{display:inline-block;background:linear-gradient(135deg,var(--pink3),var(--pink4));padding:12px 22px;border-radius:20px;color:var(--deep);font-weight:500;cursor:pointer;transition:.25s;border:2px solid transparent;font-size:15px}
+.nick-tag:hover,.nick-tag.active{background:linear-gradient(135deg,var(--deep),var(--rose));color:white;transform:translateY(-3px);box-shadow:0 8px 20px rgba(231,84,128,.25)}
+#nicknameGallery{display:none}
+.nick-msg{font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.9;color:var(--text);white-space:pre-line;margin-bottom:24px;font-style:italic}
 .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
-.gallery img{width:100%;border-radius:18px}
-footer{text-align:center;padding:30px;background:var(--pink1)}
-@media(max-width:768px){header{background-size:contain;background-color:#fce4ec;background-position:center top}}
-#gate{position:fixed;inset:0;background:linear-gradient(135deg,#fce4ec,#fff);display:flex;align-items:center;justify-content:center;z-index:9999;text-align:center;padding:20px}
-#nickMsg{white-space:pre-line}
-button{padding:10px 18px;border:none;border-radius:12px;background:#ff8fab;color:white;margin:6px;cursor:pointer}
-input{padding:10px;border-radius:10px;border:1px solid #ccc}
+.gallery img{width:100%;border-radius:18px;object-fit:cover;aspect-ratio:1;transition:.3s}
+.gallery img:hover{transform:scale(1.03)}
+
+/* TIMELINE */
+.timeline{position:relative;padding-left:40px}
+.timeline::before{content:'';position:absolute;left:16px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--pink4),var(--deep),var(--pink4))}
+.tl-item{position:relative;margin-bottom:48px;opacity:0;transform:translateX(-20px);transition:.6s ease}
+.tl-item.visible{opacity:1;transform:translateX(0)}
+.tl-dot{position:absolute;left:-31px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--deep);border:3px solid white;box-shadow:0 0 0 3px var(--pink4)}
+.tl-date{font-size:12px;font-weight:500;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.tl-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-style:italic;color:var(--deep);margin-bottom:6px}
+.tl-desc{font-size:15px;color:var(--text);line-height:1.7;opacity:.85}
+.tl-emoji{font-size:28px;margin-bottom:8px}
+
+/* MESSAGES WALL */
+.msgs-wall{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.msg-bubble{background:white;border-radius:24px 24px 24px 4px;padding:24px;box-shadow:0 8px 30px rgba(231,84,128,.1);position:relative;border-left:4px solid var(--pink4);transition:.3s}
+.msg-bubble:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(231,84,128,.15)}
+.msg-bubble:nth-child(even){border-radius:24px 24px 4px 24px;border-left:none;border-right:4px solid var(--deep)}
+.msg-bubble p{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;line-height:1.8;color:var(--text)}
+.msg-bubble .msg-from{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--muted);margin-top:12px;font-style:normal;letter-spacing:1px;text-transform:uppercase}
+
+/* SECRET LETTER */
+.letter-wrap{text-align:center}
+.envelope{display:inline-block;cursor:pointer;position:relative;margin-bottom:32px}
+.env-body{width:260px;height:180px;background:linear-gradient(135deg,#fff0f3,white);border-radius:8px;border:2px solid var(--pink4);position:relative;overflow:hidden;transition:.4s;box-shadow:0 10px 40px rgba(231,84,128,.15)}
+.env-flap{position:absolute;top:0;left:0;right:0;height:90px;background:linear-gradient(135deg,var(--pink4),var(--deep));clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:.6s;transform-style:preserve-3d}
+.env-heart{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:36px;transition:.3s}
+.envelope:hover .env-flap{transform:rotateX(-150deg)}
+.envelope.opened .env-flap{transform:rotateX(-180deg)}
+.letter-paper{background:linear-gradient(to bottom,#fff9fb,white);border-radius:16px;padding:40px;text-align:left;max-width:680px;margin:0 auto;box-shadow:0 10px 50px rgba(231,84,128,.12);border:1px solid var(--pink3);display:none;animation:letterOpen .5s ease}
+@keyframes letterOpen{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.letter-paper.visible{display:block}
+.letter-heading{font-family:'Great Vibes',cursive;font-size:42px;color:var(--deep);margin-bottom:24px}
+.letter-body{font-family:'Cormorant Garamond',serif;font-size:18px;line-height:2;color:var(--text);font-style:italic;white-space:pre-line}
+.letter-sign{font-family:'Great Vibes',cursive;font-size:32px;color:var(--deep);margin-top:24px}
+.open-hint{font-size:13px;color:var(--muted);letter-spacing:1px;margin-top:12px}
+
+/* REASONS */
+.reasons-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.reason-card{background:white;border-radius:20px;padding:24px;text-align:center;box-shadow:0 6px 24px rgba(231,84,128,.08);transition:.3s;cursor:default;border:2px solid transparent}
+.reason-card:hover{border-color:var(--pink4);transform:translateY(-4px);box-shadow:0 16px 40px rgba(231,84,128,.15)}
+.reason-num{font-family:'Cormorant Garamond',serif;font-size:48px;color:var(--pink4);font-weight:300;line-height:1}
+.reason-emoji{font-size:28px;margin:8px 0}
+.reason-text{font-size:14px;color:var(--muted);line-height:1.5}
+
+/* BIRTHDAY TEASER */
+.bday-section{background:linear-gradient(135deg,var(--deep),var(--rose));border-radius:32px;padding:60px 40px;text-align:center;color:white;position:relative;overflow:hidden}
+.bday-section::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.bday-section h2{font-family:'Great Vibes',cursive;font-size:clamp(42px,6vw,72px);margin-bottom:16px;text-shadow:0 4px 20px rgba(0,0,0,.2)}
+.bday-section p{font-size:17px;opacity:.9;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;line-height:1.7;max-width:560px;margin:0 auto 32px}
+.countdown-boxes{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:36px}
+.cbox{background:rgba(255,255,255,.15);backdrop-filter:blur(10px);border-radius:20px;padding:20px 28px;min-width:90px;border:1px solid rgba(255,255,255,.2)}
+.cbox .num{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:600;line-height:1;display:block}
+.cbox .lbl{font-size:11px;letter-spacing:2px;text-transform:uppercase;opacity:.8;margin-top:4px;display:block}
+.mystery-hint{font-size:14px;opacity:.7;letter-spacing:1px}
+.confetti-btn{background:white;color:var(--deep);border:none;border-radius:16px;padding:14px 32px;font-size:16px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:.2s;margin-top:8px}
+.confetti-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+
+/* FOOTER */
+footer{text-align:center;padding:60px 20px;background:linear-gradient(to top,var(--pink3),var(--blush))}
+footer p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;color:var(--muted)}
+footer span{color:var(--deep)}
+
+/* REVEAL ANIMATION */
+.reveal{opacity:0;transform:translateY(30px);transition:.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* AUDIO */
+#mainSong,#nickSong,#photoSong{display:none}
+
+/* MOBILE */
+@media(max-width:640px){
+  section{padding:60px 16px}
+  .bday-section{padding:40px 20px}
+  .cbox{padding:16px 20px;min-width:70px}
+  .cbox .num{font-size:38px}
+  .timeline{padding-left:28px}
+  .letter-paper{padding:28px 20px}
+}
 </style>
 </head>
 <body>
 
+<!-- CUSTOM CURSOR -->
+<div id="cursor">💗</div>
+<canvas id="cursor-trail"></canvas>
+
+<!-- GATE -->
 <div id="gate">
-  <div id="step1">
-    <h2>What's your name? 💗</h2>
-    <p>Hint: your famous nickname 😏</p>
-    <input id="nameInput"><br><br>
-    <button onclick="checkName()">Enter</button>
-    <p id="nameErr" style="color:#e75480"></p>
-  </div>
-  <div id="step2" style="display:none">
-    <h2>Do you drink water? 💧😂</h2>
-    <button onclick="waterAns(true)">Yes</button>
-    <button onclick="waterAns(false)">No</button>
-    <p id="waterErr" style="color:#e75480"></p>
-  </div>
-  <div id="step3" style="display:none">
-    <h2>Pakka ?? 😆</h2>
-    <button onclick="pakka1()">Yes</button>
-  </div>
-  <div id="step4" style="display:none">
-    <h2>Ok one more time pakka ? 🤨</h2>
-    <button onclick="enterSite()">Yes</button>
+  <div class="gate-box">
+    <div id="step1">
+      <div class="gate-emoji">🌸</div>
+      <h2>What's your name?</h2>
+      <p>Hint: your famous nickname 😏</p>
+      <input id="nameInput" placeholder="type here..." autocomplete="off" onkeydown="if(event.key==='Enter')checkName()">
+      <button onclick="checkName()">Enter →</button>
+      <p class="gate-err" id="nameErr"></p>
+    </div>
+    <div id="step2" style="display:none">
+      <div class="gate-emoji">💧</div>
+      <h2>Do you drink water?</h2>
+      <p>Very important question 😂</p>
+      <div class="row-btns">
+        <button onclick="waterAns(true)">Yes 😇</button>
+        <button onclick="waterAns(false)" style="background:linear-gradient(135deg,#aaa,#888)">No 😶</button>
+      </div>
+      <p class="gate-err" id="waterErr"></p>
+    </div>
+    <div id="step3" style="display:none">
+      <div class="gate-emoji">🤨</div>
+      <h2>Pakka??</h2>
+      <button onclick="pakka1()">Yes pakka 😆</button>
+    </div>
+    <div id="step4" style="display:none">
+      <div class="gate-emoji">👀</div>
+      <h2>Ok one more time pakka?</h2>
+      <button onclick="enterSite()">YES PAKKA 😭</button>
+    </div>
   </div>
 </div>
 
-<header><h1>Meri Laddoo 💕</h1></header>
-
-<section>
-  <div class="card nicknames">
-    <h2>Her Nicknames</h2>
-    <span data-set="milk">Dr. Perfect</span>
-    <span data-set="bachi">Bachi</span>
-    <span data-set="laddoo">Meri Laddoo</span>
-    <span data-set="lady">Lady Don</span>
-    <span data-set="kaju">Kajukatli</span>
+<!-- HEADER -->
+<header>
+  <div class="header-bg"></div>
+  <div class="hearts-float" id="heartsFloat"></div>
+  <div class="header-content">
+    <h1>Meri Laddoo 💕</h1>
+    <p class="subtitle">for my most favourite person in this world</p>
   </div>
-  <div id="nicknameGallery" class="card" style="display:none">
-    <h2 id="galleryTitle"></h2>
-    <p id="nickMsg" style="margin-bottom:15px;color:#555"></p>
+  <div class="scroll-hint">scroll down ↓</div>
+</header>
+
+<!-- NICKNAMES -->
+<section>
+  <h2 class="section-title"><span>her many names</span>The Nicknames 💗</h2>
+  <div class="card reveal">
+    <div class="nicknames-grid">
+      <span class="nick-tag" data-set="milk">Dr. Perfect</span>
+      <span class="nick-tag" data-set="bachi">Bachi</span>
+      <span class="nick-tag" data-set="laddoo">Meri Laddoo</span>
+      <span class="nick-tag" data-set="lady">Lady Don</span>
+      <span class="nick-tag" data-set="kaju">Kajukatli</span>
+    </div>
+  </div>
+  <div id="nicknameGallery" class="card reveal">
+    <h3 id="galleryTitle" style="font-family:'Cormorant Garamond',serif;font-size:28px;font-style:italic;color:var(--deep);margin-bottom:16px"></h3>
+    <p id="nickMsg" class="nick-msg"></p>
     <div class="gallery" id="dynamicGallery"></div>
   </div>
 </section>
 
-<footer>Made with ❤ for Meri Laddoo</footer>
+<!-- MEMORY TIMELINE -->
+<section>
+  <h2 class="section-title"><span>how it all began</span>Our Story 🌸</h2>
+  <div class="timeline" id="timeline">
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">The Beginning ✨</div>
+      <div class="tl-emoji">👋</div>
+      <div class="tl-title">Pehli Baar</div>
+      <div class="tl-desc">Kaun jaanta tha ki ek choti si mulaqaat itni badi dosti ban jaayegi. Aur tab se tu sirf ek insaan nahi rahi — tu meri zaroorat ban gayi. 💗</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">Early Days 🌱</div>
+      <div class="tl-emoji">😂</div>
+      <div class="tl-title">Bakchodi Era Starts</div>
+      <div class="tl-desc">Woh pehli baar jab tune mujhe daata tha. Tab se "Lady Don" waala title pakka ho gaya tha. Aur main sirf has ke reh gaya. 😭</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">The Hard Times 💪</div>
+      <div class="tl-emoji">🌧️</div>
+      <div class="tl-title">Jab Sab Mushkil Tha</div>
+      <div class="tl-desc">Maine tujhe hurt kiya, baar baar. Aur tu phir bhi rahi — sirf isliye nahi ki teri aadat hai, balki isliye ki teri dosti sachchi hai. Teri woh strength mujhe aaj bhi sharminda karti hai aur inspire bhi. 🫂</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">The Best Moments 🌟</div>
+      <div class="tl-emoji">💫</div>
+      <div class="tl-title">Woh Yaadein</div>
+      <div class="tl-desc">Teri khilkhilahat, tera kisi baat pe suddenly serious ho jaana, tera "hmm" mein poori feelings daalna — yeh sab moments jo mujhe zindagi bhar yaad rahenge. Tu meri sabse favourite memory hai. 💗</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">Right Now 🌈</div>
+      <div class="tl-emoji">🫂</div>
+      <div class="tl-title">Aaj</div>
+      <div class="tl-desc">Aaj bhi, kal bhi, hamesha — tu meri sabse pehli call hogi, meri sabse badi support. Best friends forever, aur yeh promise wala nahi, yeh fact wala hai. 💗✨</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MESSAGES WALL -->
+<section>
+  <h2 class="section-title"><span>from the heart</span>Dil Ki Baatein 💌</h2>
+  <div class="msgs-wall reveal">
+
+    <div class="msg-bubble">
+      <p>Tere hone se he main bahut reheta hu. Bahut acha lagta hai sab — apna sa, sab kuch acha lagta hai. 💗</p>
+      <div class="msg-from">— always 🫂</div>
+    </div>
+
+    <div class="msg-bubble">
+      <p>Tera hasna, tera ruthna, tera gussa karna, tera daatna — sab kuch mujhe bahut pasand hai. Sach mein. 😭💗</p>
+      <div class="msg-from">— no cap 🌸</div>
+    </div>
+
+    <div class="msg-bubble">
+      <p>Tu jo perfect piece hai, woh piece kabhi bhi kahin bhi kisi aur mein kabhi nahi milega. Tu truly one of a kind hai. 🫂</p>
+      <div class="msg-from">— genuinely 💕</div>
+    </div>
+
+    <div class="msg-bubble">
+      <p>Meri khushi teri khushi mein hoti hai. Tu hamesha khush rehna meri Laddoo — yahi meri dua hai. 🌸</p>
+      <div class="msg-from">— har roz 💗</div>
+    </div>
+
+    <div class="msg-bubble">
+      <p>I am too grateful ki main tera dost hun, tera diary hun, tera bestfriend hun. Shayad main deserve nahi karta, par tu ne diya toh le liya. 💗🫂</p>
+      <div class="msg-from">— thankful 🥹</div>
+    </div>
+
+    <div class="msg-bubble">
+      <p>Teri chupi, tera udaas hona bilkul suit nahi karta tujhe. Hamesha muskurate rehna — bas yahi chahta hun. 💗✨</p>
+      <div class="msg-from">— sach mein 🌸</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SECRET SORRY LETTER -->
+<section>
+  <h2 class="section-title"><span>something i need to say</span>A Letter For You 💌</h2>
+  <div class="letter-wrap reveal">
+    <div class="envelope" id="envelopeBtn" onclick="openLetter()">
+      <div class="env-body">
+        <div class="env-flap"></div>
+        <div class="env-heart">💌</div>
+      </div>
+    </div>
+    <p class="open-hint">tap the envelope to open 🌸</p>
+  </div>
+  <div class="letter-paper" id="letterPaper">
+    <div class="letter-heading">Meri Laddoo,</div>
+    <div class="letter-body">Main yeh likhne mein bohot der karr di. Shayad isliye ki alfaaz dhundne mein waqt lagta hai, ya shayad isliye ki main jaanta tha ki yeh likha toh aankhein bhar aaengi.
+
+Tu jaanti hai na — maine tujhe hurt kiya hai. Baar baar. Kabhi jaane mein, kabhi anjaane mein. Kabhi mere words ne chot di, kabhi meri khamoshi ne. Aur tu... tu phir bhi rahi. 
+
+Yeh meri sabse badi takleef bhi hai aur sabse badi strength bhi.
+
+Main sorry bolna chahta hun — sachcha wala, jisme excuse nahi hai, sirf acknowledgment hai. Main galat tha. Maine tujhe jo deserve karta hai woh nahi diya — consistency, patience, careful words. Aur iske liye koi justification nahi hai mere paas.
+
+Par tu jaanti hai na ki main kya jaanta hun? Ki teri dosti is duniya ki sabse asli cheez hai mere liye. Tu sirf bestie nahi hai — tu woh insaan hai jiske saath silence bhi comfortable lagta hai, jiske paas jaake sab theek lagta hai.
+
+Hum best friends hain. Aur yeh friendship — yeh pure, real, no-condition waali friendship — yeh mujhe aaj bhi sabse zyada matter karti hai.
+
+Main promise karta hun — better banunga. Tere liye nahi, khud ke liye. Kyunki tu deserve karti hai aise friends jo tujhe hurt na karein.
+
+Mujhe maaf kar dena, Meri Laddoo. Aur agar waqt lagey — theek hai. Main hun. Kahin nahi gaya. 🫂</div>
+    <div class="letter-sign">— Harshii 🥹💗</div>
+  </div>
+</section>
+
+<!-- REASONS I LOVE YOU (as bestie) -->
+<section>
+  <h2 class="section-title"><span>as your best friend</span>Why You're My Favourite Human 💗</h2>
+  <div class="reasons-grid reveal">
+
+    <div class="reason-card">
+      <div class="reason-num">01</div>
+      <div class="reason-emoji">🧠</div>
+      <div class="reason-text">Tu padhne mein bhi best hai, nakhre mein bhi</div>
+    </div>
+    <div class="reason-card">
+      <div class="reason-num">02</div>
+      <div class="reason-emoji">😂</div>
+      <div class="reason-text">Teri bakchodi literally unkillable hai</div>
+    </div>
+    <div class="reason-card">
+      <div class="reason-num">03</div>
+      <div class="reason-emoji">🫂</div>
+      <div class="reason-text">Tera hug (even virtual) sab theek kar deta hai</div>
+    </div>
+    <div class="reason-card">
+      <div class="reason-num">04</div>
+      <div class="reason-emoji">🌸</div>
+      <div class="reason-text">Tu bina bole samajh jaati hai</div>
+    </div>
+    <div class="reason-card">
+      <div class="reason-num">05</div>
+      <div class="reason-emoji">😭</div>
+      <div class="reason-text">Tera "hmm" mein poori duniya hoti hai</div>
+    </div>
+    <div class="reason-card">
+      <div class="reason-num">06</div>
+      <div class="reason-emoji">💪</div>
+      <div class="reason-text">Tu itna sab handle karti hai aur phir bhi muskurati hai</div>
+    </div>
+    <div class="reason-card">
+      <div class="reason-num">07</div>
+      <div class="reason-emoji">🌙</div>
+      <div class="reason-text">Raat ko 12-1 bje wali baatein, woh sab conversations</div>
+    </div>
+    <div class="reason-card">
+      <div class="reason-num">08</div>
+      <div class="reason-emoji">😴😂</div>
+      <div class="reason-text">Fir tu so jaati hai — 2 bje tak max wali convo with full laughing era aur phir poof 💤</div>
+    </div>
+    <div class="reason-card">
+      <div class="reason-num">09</div>
+      <div class="reason-emoji">🎭</div>
+      <div class="reason-text">Teri notankiyan honestly iconic hain</div>
+    </div>
+    <div class="reason-card">
+      <div class="reason-num">10</div>
+      <div class="reason-emoji">💗</div>
+      <div class="reason-text">Sirf sunti nahi — sunati bhi hai, sab kuch, poore dil se 🫂</div>
+    </div>
+    <div class="reason-card">
+      <div class="reason-num">11</div>
+      <div class="reason-emoji">✨</div>
+      <div class="reason-text">Tera hona hi reason enough hai</div>
+    </div>
+
+  </div>
+  <p style="text-align:center;margin-top:32px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:var(--muted)">
+    P.S. Yeh sirf 10 hain. List actually infinite hai. 🫂💗
+  </p>
+</section>
+
+<!-- BIRTHDAY TEASER -->
+<section>
+  <div class="bday-section reveal">
+    <h2>Something Big Is Coming 🎂</h2>
+    <p>Teri birthday pe sirf ek message nahi aayega meri Laddoo — kuch aur bhi hai. Surprises planned hain. Bahut sara pyaar planned hai. Bas wait karna thoda sa. ✨🎉</p>
+    <div class="countdown-boxes" id="countdownBoxes">
+      <div class="cbox"><span class="num" id="cd-days">--</span><span class="lbl">Days</span></div>
+      <div class="cbox"><span class="num" id="cd-hours">--</span><span class="lbl">Hours</span></div>
+      <div class="cbox"><span class="num" id="cd-mins">--</span><span class="lbl">Mins</span></div>
+      <div class="cbox"><span class="num" id="cd-secs">--</span><span class="lbl">Secs</span></div>
+    </div>
+    <p class="mystery-hint">🎁 More surprises loading... stay tuned 🎁</p>
+    <br>
+    <button class="confetti-btn" onclick="popConfetti()">Pop Some Joy 🎉</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Made with <span>❤</span> and a lot of feelings, for <span>Meri Laddoo</span> 💗</p>
+  <p style="margin-top:8px;font-size:14px;opacity:.7">You are my favourite kind of chaos. 🫂</p>
+</footer>
 
 <audio id="mainSong" src="main.mp3" loop></audio>
 <audio id="nickSong"></audio>
 <audio id="photoSong"></audio>
 
 <script>
-const mainAudio = document.getElementById('mainSong');
-const nickAudio = document.getElementById('nickSong');
-const photoAudio = document.getElementById('photoSong');
+// ─── CURSOR ───────────────────────────────────────────────
+const cursorEl = document.getElementById('cursor');
+const canvas = document.getElementById('cursor-trail');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+window.addEventListener('resize',()=>{ canvas.width=window.innerWidth; canvas.height=window.innerHeight; });
 
-const gate = document.getElementById('gate');
-const step1 = document.getElementById('step1');
-const step2 = document.getElementById('step2');
-const step3 = document.getElementById('step3');
-const step4 = document.getElementById('step4');
-const nameErr = document.getElementById('nameErr');
-const waterErr = document.getElementById('waterErr');
-const nameInput = document.getElementById('nameInput');
-const dynamicGallery = document.getElementById('dynamicGallery');
-const galleryTitle = document.getElementById('galleryTitle');
-const nicknameGallery = document.getElementById('nicknameGallery');
-const nickMsg = document.getElementById('nickMsg');
+let mx=0,my=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX; my=e.clientY;
+  cursorEl.style.left=mx+'px';
+  cursorEl.style.top=my+'px';
+  // sparkle
+  if(Math.random()>.6){
+    const sp=document.createElement('div');
+    sp.className='sparkle';
+    sp.style.left=(mx+Math.random()*20-10)+'px';
+    sp.style.top=(my+Math.random()*20-10)+'px';
+    sp.textContent=['💗','✨','🌸','💕','⭐','🩷'][Math.floor(Math.random()*6)];
+    document.body.appendChild(sp);
+    setTimeout(()=>sp.remove(),800);
+  }
+});
+cursorEl.style.cssText+='position:fixed;font-size:16px;background:none;width:auto;height:auto;';
 
-function stopAllExtraAudio(){
-  nickAudio.pause(); nickAudio.currentTime = 0;
-  photoAudio.pause(); photoAudio.currentTime = 0;
-}
-function pauseMain(){ mainAudio.pause(); }
+// ─── GATE ────────────────────────────────────────────────
+const gate=document.getElementById('gate');
+const mainAudio=document.getElementById('mainSong');
+const nickAudio=document.getElementById('nickSong');
+const photoAudio=document.getElementById('photoSong');
+const step1=document.getElementById('step1'),step2=document.getElementById('step2');
+const step3=document.getElementById('step3'),step4=document.getElementById('step4');
+const nameErr=document.getElementById('nameErr'),waterErr=document.getElementById('waterErr');
+const nameInput=document.getElementById('nameInput');
 
-// gate logic
 function checkName(){
-  const v = nameInput.value.trim().toLowerCase();
-  if(v==='bachi'){
-    step1.style.display='none';
-    step2.style.display='block';
-    nameErr.innerText='';
-  } else nameErr.innerText='Hmm… something missing 🤔';
+  const v=nameInput.value.trim().toLowerCase();
+  if(v==='bachi'){ step1.style.display='none'; step2.style.display='block'; nameErr.innerText=''; }
+  else nameErr.innerText='Hmm… kuch toh missing hai 🤔';
 }
 function waterAns(ans){
   if(ans){ step2.style.display='none'; step3.style.display='block'; waterErr.innerText=''; }
-  else waterErr.innerText='Go drink water first 💧😆';
+  else waterErr.innerText='Pehle paani pee le 💧😆';
 }
 function pakka1(){ step3.style.display='none'; step4.style.display='block'; }
-function enterSite(){ gate.remove(); mainAudio.volume=.2; mainAudio.play().catch(()=>{}); }
+function enterSite(){
+  gate.style.opacity='0'; gate.style.transition='opacity .6s';
+  setTimeout(()=>{ gate.remove(); mainAudio.volume=.2; mainAudio.play().catch(()=>{}); startHearts(); },600);
+}
 
-// nickname data
+// ─── FLOATING HEARTS ─────────────────────────────────────
+function startHearts(){
+  const container=document.getElementById('heartsFloat');
+  const emojis=['💗','🌸','💕','✨','🩷','💫'];
+  setInterval(()=>{
+    const h=document.createElement('div');
+    h.className='heart-p';
+    h.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    h.style.left=Math.random()*100+'%';
+    h.style.animationDuration=(6+Math.random()*8)+'s';
+    h.style.animationDelay=(Math.random()*2)+'s';
+    h.style.fontSize=(12+Math.random()*16)+'px';
+    container.appendChild(h);
+    setTimeout(()=>h.remove(),14000);
+  },1200);
+}
+
+// ─── NICKNAME DATA ────────────────────────────────────────
 const imageSets={
-  bachi:{msg:`Bachi - Sabse phela nickname ...not just 5 din choti h...bcz choti bachi h bhi ye
-Apni harkte, notankiya , Bakchodi vgera se khud ko prove krti h bachi h ye😂 although samjhdar bhi h mature bhi h lekin mere samne bachpana nikl he aata h iska and ye bachpana merko bahut pyara lgta h  😂💗
-Ye piece jo abhi 19 saal purana h and kuch mahine me 20 saal purana hojayega ye piece😂😂 humesha khushi he deta h merko kyuki iska bachpana aisa h jo kbhi kisi or me ni dikha😂💗🫂`,images:['img3.jpg']},
-  laddoo:{msg:`Meri Laddoo - mere liye iska meri jindgi me hona he sab kuch h ...meri khushi iski khushi me hoti h tu hemsha khush rha kr meri laddo .....tujhe ni pta but tere hone se he m bahut rheta hu bahut acha lgta h sab apnasa sb kuch acha lgta h 💗😭🫂tera hasna tera ruthna tera gussa krna tera daatna sb kuch merko bahut psnd h 🫂💗`,images:['img2.jpg']},
-  lady:{msg:`Lady don - hmesha dadagiri krti h🥲hmesha daatna bhi acha nhi h 😭😭gundi khi ki sugli harami h kutti kamini 😭😭but jaisi bhi h meri h or sabse achi h 🥰💗🫂 jyada sikhayat bhi nhi kr skta ulta mere dhar degi 😭😭to at the end sabse achi sabse bdi gundi upr se gundi bhi vo jo phele todegi fir dr ki degree kr he rhi h to jodegi bhi
-fav dialoge hone wala h phele todugi fir fodugi fir jod k vapis todugi 😭💗😂`,images:['img1.jpg']},
-  milk:{msg:`Bachi achi h yrr tu ....mere pass sabd ni h teri tarif kaise kru but hn tarif itni sari h ki kbhi ruk bhi nhi skta m sbdkosh se sbd he khtm hojate h mere tere samne fir bhi jaise taise tarif kr he leta hu 😭😭
-tu jo Perfect peice h vo peice kbhi bhi khi bhi kisi or me kbhi ni milega hasna rona ruthna bhul jana ldai krlena kaleshi sugli hoke nikhrna dramebaaz notankibaaz everything evrey mood everything in one person and that person is you and you are too perfect and handling everything too perfectly 💗🫂
-You aree best in studying, best in acting, best in nakhre jhading, best in mood swings dikhaing , best in evreything bhai 🫂💗😭
-I am too gratefull that I am your friend your diary your bestfriend 💗🫂`,images:['img5.jpg']},
-  kaju:{msg:`Kajukatli - Kajukatli ki trh safed gori chitti lambi height 47 kg ka weight 28 ki kmr🌝😂 100 crore se bhi jyada k nakhre 😂💗itna saab smbhalti h ghr me clg me and sbse important merko smbhal leti h to bhai sweet to ni h tu but hm sweetest to jrur h 🥰💗🫂
-Hmesha muskrati khilkhilati khush rha kar teri chupi tera udas hona bilkul suit ni krta tere pe meri kajukatli to hmesha muskrate rha kr 🫂💗`,images:['img6.jpg','img7.jpg','img8.jpg']}
+  bachi:{msg:`Bachi - Sabse pehla nickname ...not just 5 din choti h...bcz choti bachi h bhi ye\nApni harkte, notankiya, Bakchodi vgera se khud ko prove krti h bachi h ye 😂 although samjhdar bhi h mature bhi h lekin mere samne bachpana nikl he aata h iska and ye bachpana merko bahut pyara lgta h 😂💗\nYe piece jo abhi 19 saal purana h and kuch mahine me 20 saal purana hojayega ye piece 😂😂 humesha khushi he deta h merko kyuki iska bachpana aisa h jo kbhi kisi or me ni dikha 😂💗🫂`,images:['img3.jpg']},
+  laddoo:{msg:`Meri Laddoo - mere liye iska meri jindgi me hona he sab kuch h ...meri khushi iski khushi me hoti h tu hemsha khush rha kr meri Laddoo .....tujhe ni pta but tere hone se he m bahut rheta hu bahut acha lgta h sab apnasa sb kuch acha lgta h 💗😭🫂\ntera hasna tera ruthna tera gussa krna tera daatna sb kuch merko bahut psnd h 🫂💗`,images:['img2.jpg']},
+  lady:{msg:`Lady don - hmesha dadagiri krti h 🥲 hmesha daatna bhi acha nhi h 😭😭 gundi khi ki sugli harami h kutti kamini 😭😭 but jaisi bhi h meri h or sabse achi h 🥰💗🫂 jyada sikhayat bhi nhi kr skta ulta mere dhar degi 😭😭 to at the end sabse achi sabse bdi gundi upr se gundi bhi vo jo phele todegi fir dr ki degree kr he rhi h to jodegi bhi\nfav dialoge hone wala h phele todugi fir fodugi fir jod k vapis todugi 😭💗😂`,images:['img1.jpg']},
+  milk:{msg:`Bachi achi h yrr tu ....mere pass sabd ni h teri tarif kaise kru but hn tarif itni sari h ki kbhi ruk bhi nhi skta m sbdkosh se sbd he khtm hojate h mere tere samne fir bhi jaise taise tarif kr he leta hu 😭😭\ntu jo Perfect peice h vo peice kbhi bhi khi bhi kisi or me kbhi ni milega hasna rona ruthna bhul jana ldai krlena kaleshi sugli hoke nikhrna dramebaaz notankibaaz everything evrey mood everything in one person and that person is you and you are too perfect and handling everything too perfectly 💗🫂\nYou aree best in studying, best in acting, best in nakhre jhading, best in mood swings dikhaing, best in evreything bhai 🫂💗😭\nI am too gratefull that I am your friend your diary your bestfriend 💗🫂`,images:['img5.jpg']},
+  kaju:{msg:`Kajukatli - Kajukatli ki trh safed gori chitti lambi height 47 kg ka weight 28 ki kmr 🌝😂 100 crore se bhi jyada k nakhre 😂💗 itna saab smbhalti h ghr me clg me and sbse important merko smbhal leti h to bhai sweet to ni h tu but hm sweetest to jrur h 🥰💗🫂\nHmesha muskrati khilkhilati khush rha kar teri chupi tera udas hona bilkul suit ni krta tere pe meri kajukatli to hmesha muskrate rha kr 🫂💗`,images:['img6.jpg','img7.jpg','img8.jpg']}
 };
 
-// nickname click
-document.querySelectorAll('.nicknames span').forEach(tag=>{
+document.querySelectorAll('.nick-tag').forEach(tag=>{
   tag.onclick=()=>{
-    stopAllExtraAudio(); pauseMain();
+    document.querySelectorAll('.nick-tag').forEach(t=>t.classList.remove('active'));
+    tag.classList.add('active');
+    nickAudio.pause(); nickAudio.currentTime=0;
+    photoAudio.pause(); photoAudio.currentTime=0;
     const key=tag.dataset.set;
+    const dynamicGallery=document.getElementById('dynamicGallery');
     dynamicGallery.innerHTML='';
-    nickMsg.innerText=imageSets[key].msg;
-
-    // play song immediately based on first image
-    if(imageSets[key].images && imageSets[key].images.length){
+    document.getElementById('nickMsg').innerText=imageSets[key].msg;
+    if(imageSets[key].images?.length){
       const first=imageSets[key].images[0];
       const song=(first.includes('img6')||first.includes('img7')||first.includes('img8'))?'img6.mp3':first.replace('.jpg','.mp3');
-      photoAudio.src=song; photoAudio.loop=true; photoAudio.play();
+      photoAudio.src=song; photoAudio.loop=true; photoAudio.play().catch(()=>{});
     }
-
     imageSets[key].images.forEach(src=>{
       const img=document.createElement('img'); img.src=src;
       dynamicGallery.appendChild(img);
     });
-
-    galleryTitle.innerText=tag.innerText+' 💗';
-    nicknameGallery.style.display='block';
+    document.getElementById('galleryTitle').innerText=tag.innerText+' 💗';
+    const ng=document.getElementById('nicknameGallery');
+    ng.style.display='block';
+    ng.scrollIntoView({behavior:'smooth',block:'nearest'});
   }
 });
+
+// ─── LETTER ───────────────────────────────────────────────
+function openLetter(){
+  const env=document.getElementById('envelopeBtn');
+  const paper=document.getElementById('letterPaper');
+  env.classList.add('opened');
+  setTimeout(()=>{ paper.classList.add('visible'); paper.scrollIntoView({behavior:'smooth',block:'start'}); },400);
+}
+
+// ─── BIRTHDAY COUNTDOWN ───────────────────────────────────
+// ← SET YOUR BESTIE'S BIRTHDAY HERE (month is 0-indexed: 0=Jan, 11=Dec)
+const BDAY_MONTH = 9;  // October = 9
+const BDAY_DAY   = 15; // 15th
+
+function updateCountdown(){
+  const now=new Date();
+  let bday=new Date(now.getFullYear(), BDAY_MONTH, BDAY_DAY);
+  if(now >= bday) bday=new Date(now.getFullYear()+1, BDAY_MONTH, BDAY_DAY);
+  const diff=bday-now;
+  const days=Math.floor(diff/86400000);
+  const hours=Math.floor((diff%86400000)/3600000);
+  const mins=Math.floor((diff%3600000)/60000);
+  const secs=Math.floor((diff%60000)/1000);
+  document.getElementById('cd-days').textContent=String(days).padStart(2,'0');
+  document.getElementById('cd-hours').textContent=String(hours).padStart(2,'0');
+  document.getElementById('cd-mins').textContent=String(mins).padStart(2,'0');
+  document.getElementById('cd-secs').textContent=String(secs).padStart(2,'0');
+}
+updateCountdown(); setInterval(updateCountdown,1000);
+
+// ─── CONFETTI ─────────────────────────────────────────────
+function popConfetti(){
+  const pieces=['🎉','🎊','💗','✨','🌸','💕','🩷','💫','🎈','⭐'];
+  for(let i=0;i<40;i++){
+    setTimeout(()=>{
+      const c=document.createElement('div');
+      c.style.cssText=`position:fixed;top:${30+Math.random()*40}%;left:${Math.random()*100}%;font-size:${16+Math.random()*20}px;pointer-events:none;z-index:9998;animation:sparkle-fall ${.8+Math.random()*.8}s ease-out forwards`;
+      c.textContent=pieces[Math.floor(Math.random()*pieces.length)];
+      document.body.appendChild(c);
+      setTimeout(()=>c.remove(),1600);
+    },i*40);
+  }
+}
+
+// ─── SCROLL REVEAL ────────────────────────────────────────
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:.15});
+document.querySelectorAll('.reveal,.tl-item').forEach(el=>observer.observe(el));
 </script>
 </body>
 </html>
