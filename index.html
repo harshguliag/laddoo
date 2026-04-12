@@ -56,8 +56,13 @@ section{padding:80px 24px;max-width:1100px;margin:auto}
 .section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,56px);font-style:italic;color:var(--deep);margin-bottom:48px;text-align:center}
 .section-title span{display:block;font-family:'DM Sans',sans-serif;font-style:normal;font-size:14px;font-weight:400;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px}
 
+/* TULIP BG - used on all cards */
+:root{
+  --tulip-bg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='200' viewBox='0 0 160 200'%3E%3Cg opacity='0.10'%3E%3C!-- tulip 1 --%3E%3Cellipse cx='40' cy='72' rx='10' ry='18' fill='%23ffb6c1' transform='rotate(-18 40 72)'/%3E%3Cellipse cx='40' cy='72' rx='10' ry='18' fill='%23ffb6c1' transform='rotate(18 40 72)'/%3E%3Cellipse cx='40' cy='68' rx='8' ry='16' fill='white' transform='rotate(0 40 68)'/%3E%3Crect x='38.5' y='88' width='3' height='32' rx='1.5' fill='%23a8d5a2'/%3E%3Cellipse cx='32' cy='108' rx='10' ry='5' fill='%23a8d5a2' transform='rotate(-30 32 108)'/%3E%3C!-- tulip 2 --%3E%3Cellipse cx='110' cy='48' rx='10' ry='18' fill='%23ffb6c1' transform='rotate(-18 110 48)'/%3E%3Cellipse cx='110' cy='48' rx='10' ry='18' fill='%23ffb6c1' transform='rotate(18 110 48)'/%3E%3Cellipse cx='110' cy='44' rx='8' ry='16' fill='white' transform='rotate(0 110 44)'/%3E%3Crect x='108.5' y='64' width='3' height='36' rx='1.5' fill='%23a8d5a2'/%3E%3Cellipse cx='120' cy='88' rx='10' ry='5' fill='%23a8d5a2' transform='rotate(30 120 88)'/%3E%3C!-- tulip 3 --%3E%3Cellipse cx='75' cy='155' rx='9' ry='16' fill='%23ffb6c1' transform='rotate(-15 75 155)'/%3E%3Cellipse cx='75' cy='155' rx='9' ry='16' fill='%23ffb6c1' transform='rotate(15 75 155)'/%3E%3Cellipse cx='75' cy='152' rx='7' ry='14' fill='white'/%3E%3Crect x='73.5' y='169' width='3' height='28' rx='1.5' fill='%23a8d5a2'/%3E%3Cellipse cx='65' cy='186' rx='9' ry='4' fill='%23a8d5a2' transform='rotate(-25 65 186)'/%3E%3C!-- tulip 4 small --%3E%3Cellipse cx='140' cy='140' rx='7' ry='13' fill='%23ffb6c1' transform='rotate(-12 140 140)'/%3E%3Cellipse cx='140' cy='140' rx='7' ry='13' fill='%23ffb6c1' transform='rotate(12 140 140)'/%3E%3Cellipse cx='140' cy='137' rx='6' ry='11' fill='white'/%3E%3Crect x='139' y='151' width='2.5' height='22' rx='1.2' fill='%23a8d5a2'/%3E%3C!-- tulip 5 small --%3E%3Cellipse cx='18' cy='170' rx='7' ry='12' fill='%23ffb6c1' transform='rotate(10 18 170)'/%3E%3Cellipse cx='18' cy='170' rx='7' ry='12' fill='%23ffb6c1' transform='rotate(-10 18 170)'/%3E%3Cellipse cx='18' cy='167' rx='5.5' ry='10' fill='white'/%3E%3Crect x='17' y='180' width='2.5' height='18' rx='1.2' fill='%23a8d5a2'/%3E%3C!-- dots --%3E%3Ccircle cx='90' cy='20' r='2' fill='%23ffb6c1'/%3E%3Ccircle cx='20' cy='40' r='1.5' fill='%23ffb6c1'/%3E%3Ccircle cx='150' cy='100' r='2' fill='%23ffb6c1'/%3E%3Ccircle cx='55' cy='130' r='1.5' fill='%23ffb6c1'/%3E%3C/g%3E%3C/svg%3E");
+}
+
 /* NICKNAMES (kept from original) */
-.card{background:white;padding:32px;border-radius:28px;box-shadow:0 10px 40px rgba(231,84,128,.08);margin-bottom:40px}
+.card{background:white;background-image:var(--tulip-bg);background-size:320px 400px;padding:32px;border-radius:28px;box-shadow:0 10px 40px rgba(231,84,128,.08);margin-bottom:40px}
 .nicknames-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
 .nick-tag{display:inline-block;background:linear-gradient(135deg,var(--pink3),var(--pink4));padding:12px 22px;border-radius:20px;color:var(--deep);font-weight:500;cursor:pointer;transition:.25s;border:2px solid transparent;font-size:15px}
 .nick-tag:hover,.nick-tag.active{background:linear-gradient(135deg,var(--deep),var(--rose));color:white;transform:translateY(-3px);box-shadow:0 8px 20px rgba(231,84,128,.25)}
@@ -80,7 +85,7 @@ section{padding:80px 24px;max-width:1100px;margin:auto}
 
 /* MESSAGES WALL */
 .msgs-wall{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
-.msg-bubble{background:white;border-radius:24px 24px 24px 4px;padding:24px;box-shadow:0 8px 30px rgba(231,84,128,.1);position:relative;border-left:4px solid var(--pink4);transition:.3s}
+.msg-bubble{background:white;background-image:var(--tulip-bg);background-size:280px 350px;border-radius:24px 24px 24px 4px;padding:24px;box-shadow:0 8px 30px rgba(231,84,128,.1);position:relative;border-left:4px solid var(--pink4);transition:.3s}
 .msg-bubble:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(231,84,128,.15)}
 .msg-bubble:nth-child(even){border-radius:24px 24px 4px 24px;border-left:none;border-right:4px solid var(--deep)}
 .msg-bubble p{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;line-height:1.8;color:var(--text)}
@@ -94,7 +99,7 @@ section{padding:80px 24px;max-width:1100px;margin:auto}
 .env-heart{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:36px;transition:.3s}
 .envelope:hover .env-flap{transform:rotateX(-150deg)}
 .envelope.opened .env-flap{transform:rotateX(-180deg)}
-.letter-paper{background:linear-gradient(to bottom,#fff9fb,white);border-radius:16px;padding:40px;text-align:left;max-width:680px;margin:0 auto;box-shadow:0 10px 50px rgba(231,84,128,.12);border:1px solid var(--pink3);display:none;animation:letterOpen .5s ease}
+.letter-paper{background:linear-gradient(to bottom,#fff9fb,white);background-image:var(--tulip-bg);background-size:360px 450px;border-radius:16px;padding:40px;text-align:left;max-width:680px;margin:0 auto;box-shadow:0 10px 50px rgba(231,84,128,.12);border:1px solid var(--pink3);display:none;animation:letterOpen .5s ease}
 @keyframes letterOpen{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
 .letter-paper.visible{display:block}
 .letter-heading{font-family:'Great Vibes',cursive;font-size:42px;color:var(--deep);margin-bottom:24px}
@@ -104,7 +109,7 @@ section{padding:80px 24px;max-width:1100px;margin:auto}
 
 /* REASONS */
 .reasons-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
-.reason-card{background:white;border-radius:20px;padding:24px;text-align:center;box-shadow:0 6px 24px rgba(231,84,128,.08);transition:.3s;cursor:default;border:2px solid transparent}
+.reason-card{background:white;background-image:var(--tulip-bg);background-size:240px 300px;border-radius:20px;padding:24px;text-align:center;box-shadow:0 6px 24px rgba(231,84,128,.08);transition:.3s;cursor:default;border:2px solid transparent}
 .reason-card:hover{border-color:var(--pink4);transform:translateY(-4px);box-shadow:0 16px 40px rgba(231,84,128,.15)}
 .reason-num{font-family:'Cormorant Garamond',serif;font-size:48px;color:var(--pink4);font-weight:300;line-height:1}
 .reason-emoji{font-size:28px;margin:8px 0}
@@ -398,7 +403,7 @@ Mujhe maaf kar dena, Meri Laddoo. Aur agar waqt lagey — theek hai. Main hun. K
 
   </div>
   <p style="text-align:center;margin-top:32px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:var(--muted)">
-    P.S. Yeh sirf 10 hain. List actually infinite hai. 🫂💗
+    P.S. Yeh sirf 11 hain. List actually infinite hai. 🫂💗
   </p>
 </section>
 
@@ -406,7 +411,7 @@ Mujhe maaf kar dena, Meri Laddoo. Aur agar waqt lagey — theek hai. Main hun. K
 <section>
   <div class="bday-section reveal">
     <h2>Something Big Is Coming 🎂</h2>
-    <p>Teri birthday pe sirf ek message nahi aayega meri Laddoo — kuch aur bhi hai. Surprises planned hain. Bahut sara pyaar planned hai. Bas wait karna thoda sa. ✨🎉</p>
+    <p>Teri birthday pe sirf ek message nahi aayega Meri Laddoo — kuch aur bhi hai. Surprises planned hain. Bahut sara pyaar planned hai. Bas wait karna thoda sa. ✨🎉</p>
     <div class="countdown-boxes" id="countdownBoxes">
       <div class="cbox"><span class="num" id="cd-days">--</span><span class="lbl">Days</span></div>
       <div class="cbox"><span class="num" id="cd-hours">--</span><span class="lbl">Hours</span></div>
